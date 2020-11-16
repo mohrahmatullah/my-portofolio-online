@@ -593,6 +593,81 @@ class DashboardController extends Controller
 
     }
 
+    public function skill()
+    {
+        $data['title_form'] = 'Skill';
+        $params = Param::where('params', 'admin-skill')->first();
+        if(isset($params)){
+          $params_value = $params->params_value;
+          $data['products'] = unserialize($params_value);
+        }
+        // dd($data);
+        return view('admin.skill.index', $data);
+    }
+
+    public function saveSkill(Request $request)
+    {
+        $data = $request->all();
+        dd($data);
+        $rules =  ['setting_twitter'  => 'required' ,'setting_facebook' => 'required', 'setting_instagram'  => 'required' ,'setting_skype' => 'required', 'setting_linkedin' => 'required'];
+        $atributname = [
+          'setting_twitter.required' => 'Field is required.'
+        ];
+
+        $validator = Validator::make($data, $rules, $atributname);
+        // $arr = get_defined_vars(); dd($arr);
+        if($validator->fails()){
+            return redirect()->back()
+            ->withInput()
+            ->withErrors( $validator );
+        }
+        else{
+          $cek = Param::where('params', 'admin-skill')->first();
+          // dd($cek);
+          if($cek){
+            // echo "edit";
+            $params_value = array(
+              'nama_lengkap'              => $request->setting_nama_lengkap,
+              'profesi'              => $request->setting_profesi,
+              'account_twitter'              => $request->setting_twitter,
+              'account_facebook'              => $request->setting_facebook,
+              'account_instagram'        => $request->setting_instagram,
+              'account_skype'              => $request->setting_skype,
+              'account_linkedin'              => $request->setting_linkedin
+            );
+
+            $data = array(
+              'params_value'        => serialize($params_value)
+            );
+            Param::where('params', 'admin-skill')->update($data);
+
+            Session::flash('success-message', "Success Setting" );
+            return redirect()->route('skill-admin');
+          }else{            
+            
+            $p        =  new Param; 
+            $params_value = array(
+              'nama_lengkap'              => $request->setting_nama_lengkap,
+              'profesi'              => $request->setting_profesi,
+              'account_twitter'              => $request->setting_twitter,
+              'account_facebook'              => $request->setting_facebook,
+              'account_instagram'        => $request->setting_instagram,
+              'account_skype'              => $request->setting_skype,
+              'account_linkedin'              => $request->setting_linkedin
+            );
+            $p->params                 = $request->setting_params;
+            $p->params_value           = serialize($params_value);
+            // $p->title                  = $request->abouts_title;
+            // $p->description            = $request->abouts_description;
+            $p->save();
+
+            Session::flash('success-message', "Success Setting");
+            return redirect()->route('skill-admin');
+          }            
+        }
+
+    }
+
     /**
      * Display the specified resource.
      *

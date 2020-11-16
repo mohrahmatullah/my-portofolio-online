@@ -131,4 +131,8 @@
       }
     });
   }
+
+  $(document).on('input change', '#slider_pax', function() {
+      $('#slider_pax_value').html( $(this).val() );
+  });
 </script>

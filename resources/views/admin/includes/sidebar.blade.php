@@ -88,6 +88,15 @@
           </li>
 
           <li class="nav-item has-treeview">
+            <a href="{{ route('skill-admin') }}" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Skill
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview">
             <a href="{{ route('abouts-admin') }}" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
