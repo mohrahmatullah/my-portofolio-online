@@ -456,6 +456,7 @@ class ComposerStaticInit2d20dbc8d9c9850df8f0598948e30aa5
         'App\\Models\\Keranjang' => __DIR__ . '/../..' . '/app/Models/Keranjang.php',
         'App\\Models\\Portofolio' => __DIR__ . '/../..' . '/app/Models/Portofolio.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
+        'App\\Models\\Resume' => __DIR__ . '/../..' . '/app/Models/Resume.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
