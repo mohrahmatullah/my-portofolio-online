@@ -70,6 +70,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
   route::get('resume/{id}', 'DashboardController@resumeUpdate')->name('update-resume');
   route::post('resume/{id}', 'DashboardController@saveResume')->name('save-resume');
 
+  route::get('abouts', 'DashboardController@abouts')->name('abouts-admin');
+  route::post('abouts', 'DashboardController@saveAbouts')->name('save-abouts-admin');
+
   route::post('upload-related-image', 'AjaxController@saveRelatedImage')->name('upload-related-image');
 });
 

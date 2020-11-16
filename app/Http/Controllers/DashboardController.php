@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Portofolio;
 use App\Models\Resume;
+use App\Models\Param;
 use Session;
 use Validator;
 use Illuminate\Support\Facades\Storage;
@@ -445,6 +446,59 @@ class DashboardController extends Controller
               return redirect()->route('resume-list');
 
             }
+        }
+
+    }
+
+    public function abouts()
+    {
+        $data['title_form'] = 'Abouts';
+        $data['products'] = Param::where('params', 'admin-abouts')->first();
+        // dd($data);
+        return view('admin.abouts.index', $data);
+    }
+
+    public function saveAbouts(Request $request)
+    {
+        $data = $request->all();
+        // dd($data);
+        $rules =  ['abouts_title'  => 'required' ,'abouts_description' => 'required'];
+        $atributname = [
+          'abouts_title.required' => 'Field is required.',
+          'abouts_description.required' => 'Field is required.'
+        ];
+
+        $validator = Validator::make($data, $rules, $atributname);
+        // $arr = get_defined_vars(); dd($arr);
+        if($validator->fails()){
+            return redirect()->back()
+            ->withInput()
+            ->withErrors( $validator );
+        }
+        else{
+          $cek = Param::where('params', 'admin-abouts')->first();
+          // dd($cek);
+          if($cek){
+            // echo "edit";
+            $data = array(
+              'title'              => $request->abouts_title,
+              'description'        => $request->abouts_description
+            );
+            Param::where('params', 'admin-abouts')->update($data);
+
+            Session::flash('success-message', "Success update Abouts" );
+            return redirect()->route('abouts-admin');
+          }else{            
+            
+            $p        =  new Param; 
+            $p->params                 = $request->abouts_params;
+            $p->title                  = $request->abouts_title;
+            $p->description            = $request->abouts_description;
+            $p->save();
+
+            Session::flash('success-message', "Success update Abouts" );
+            return redirect()->route('abouts-admin');
+          }            
         }
 
     }
