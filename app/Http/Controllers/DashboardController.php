@@ -453,7 +453,9 @@ class DashboardController extends Controller
     public function abouts()
     {
         $data['title_form'] = 'Abouts';
-        $data['products'] = Param::where('params', 'admin-abouts')->first();
+        $params = Param::where('params', 'admin-abouts')->first()->params_value;
+        $data['products'] = unserialize($params);
+        
         // dd($data);
         return view('admin.abouts.index', $data);
     }
@@ -480,9 +482,14 @@ class DashboardController extends Controller
           // dd($cek);
           if($cek){
             // echo "edit";
-            $data = array(
+            $params_value = array(
+              'image'              => $request->abouts_image,
               'title'              => $request->abouts_title,
               'description'        => $request->abouts_description
+            );
+
+            $data = array(
+              'params_value'        => serialize($params_value)
             );
             Param::where('params', 'admin-abouts')->update($data);
 
@@ -491,9 +498,80 @@ class DashboardController extends Controller
           }else{            
             
             $p        =  new Param; 
+            $params_value = array(
+              'image'              => $request->abouts_image,
+              'title'              => $request->abouts_title,
+              'description'        => $request->abouts_description
+            );
             $p->params                 = $request->abouts_params;
-            $p->title                  = $request->abouts_title;
-            $p->description            = $request->abouts_description;
+            $p->params_value           = serialize($params_value);
+            // $p->title                  = $request->abouts_title;
+            // $p->description            = $request->abouts_description;
+            $p->save();
+
+            Session::flash('success-message', "Success update Abouts" );
+            return redirect()->route('abouts-admin');
+          }            
+        }
+
+    }
+
+    public function setting()
+    {
+        $data['title_form'] = 'Setting';
+        $params = Param::where('params', 'admin-abouts')->first()->params_value;
+        $data['products'] = unserialize($params);
+        // dd($data);
+        return view('admin.setting.index', $data);
+    }
+
+    public function saveSetting(Request $request)
+    {
+        $data = $request->all();
+        // dd($data);
+        $rules =  ['abouts_title'  => 'required' ,'abouts_description' => 'required'];
+        $atributname = [
+          'abouts_title.required' => 'Field is required.',
+          'abouts_description.required' => 'Field is required.'
+        ];
+
+        $validator = Validator::make($data, $rules, $atributname);
+        // $arr = get_defined_vars(); dd($arr);
+        if($validator->fails()){
+            return redirect()->back()
+            ->withInput()
+            ->withErrors( $validator );
+        }
+        else{
+          $cek = Param::where('params', 'admin-abouts')->first();
+          // dd($cek);
+          if($cek){
+            // echo "edit";
+            $params_value = array(
+              'image'              => $request->abouts_image,
+              'title'              => $request->abouts_title,
+              'description'        => $request->abouts_description
+            );
+
+            $data = array(
+              'params_value'        => serialize($params_value)
+            );
+            Param::where('params', 'admin-abouts')->update($data);
+
+            Session::flash('success-message', "Success update Abouts" );
+            return redirect()->route('abouts-admin');
+          }else{            
+            
+            $p        =  new Param; 
+            $params_value = array(
+              'image'              => $request->abouts_image,
+              'title'              => $request->abouts_title,
+              'description'        => $request->abouts_description
+            );
+            $p->params                 = $request->abouts_params;
+            $p->params_value           = serialize($params_value);
+            // $p->title                  = $request->abouts_title;
+            // $p->description            = $request->abouts_description;
             $p->save();
 
             Session::flash('success-message', "Success update Abouts" );

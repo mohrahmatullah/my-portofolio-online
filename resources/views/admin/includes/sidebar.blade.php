@@ -95,6 +95,15 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item has-treeview">
+            <a href="{{ route('setting-admin') }}" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Setting
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

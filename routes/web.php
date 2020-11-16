@@ -73,6 +73,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
   route::get('abouts', 'DashboardController@abouts')->name('abouts-admin');
   route::post('abouts', 'DashboardController@saveAbouts')->name('save-abouts-admin');
 
+  route::get('setting', 'DashboardController@setting')->name('setting-admin');
+  route::post('setting', 'DashboardController@saveSetting')->name('save-setting-admin');
+
   route::post('upload-related-image', 'AjaxController@saveRelatedImage')->name('upload-related-image');
 });
 

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Portofolio;
 use App\Models\Resume;
+use App\Models\Param;
 
 class FrontendController extends Controller
 {
@@ -27,7 +28,8 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        return view('frontend.home.index');
+        $data['abouts'] = Param::where('params', 'admin-abouts')->first();
+        return view('frontend.home.index', $data);
     }
 
     public function resume()
