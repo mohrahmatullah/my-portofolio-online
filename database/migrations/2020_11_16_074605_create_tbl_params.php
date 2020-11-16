@@ -16,7 +16,7 @@ class CreateTblParams extends Migration
         Schema::create('tbl_params', function (Blueprint $table) {
             $table->increments('id');
             $table->string('params');
-            $table->string('params_value');
+            $table->string('params_value', 10000);
             $table->timestamps();
         });
     }

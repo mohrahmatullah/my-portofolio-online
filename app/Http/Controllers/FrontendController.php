@@ -28,7 +28,14 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $data['abouts'] = Param::where('params', 'admin-abouts')->first();
+        $params = Param::where('params', 'admin-abouts')->first();
+        $params_dev = Param::where('params', 'admin-setting')->first();
+        $params_value = $params->params_value;
+        $data['abouts'] = unserialize($params_value);
+        $params_value_dev = $params_dev->params_value;
+        $data['dev'] = unserialize($params_value_dev);
+            // $arr = get_defined_vars();
+            // dd($arr);
         return view('frontend.home.index', $data);
     }
 

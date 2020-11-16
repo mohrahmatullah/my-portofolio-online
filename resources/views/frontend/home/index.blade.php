@@ -4,8 +4,8 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
 	<div class="hero-container" data-aos="fade-in">
-	  <h1>Alex Smith</h1>
-	  <p>I'm <span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer"></span></p>
+	  <h1>{{ $dev['nama_lengkap'] }}</h1>
+	  <p>I'm <span class="typed" data-typed-items="{{ $dev['profesi'] }}"></span></p>
 	</div>
 </section><!-- End Hero -->
 
@@ -22,11 +22,11 @@
 
 	    <div class="row">
 	      <div class="col-lg-4" data-aos="fade-right">
-	        <img src="{{url('frontend/assets/img/profile-img.jpg')}}" class="img-fluid" alt="">
+	        <img src="/uploads/{{ $abouts['image'] }}" class="img-fluid" alt="">
 	      </div>
 	      <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-	        <h3>{{ $abouts->title }}</h3>
-	        {!! string_decode($abouts->description) !!}
+	        <h3>{{ $abouts['title'] }}</h3>
+	        {!! string_decode($abouts['description']) !!}
 	      </div>
 	    </div>
 

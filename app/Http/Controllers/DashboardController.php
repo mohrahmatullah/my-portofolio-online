@@ -453,9 +453,11 @@ class DashboardController extends Controller
     public function abouts()
     {
         $data['title_form'] = 'Abouts';
-        $params = Param::where('params', 'admin-abouts')->first()->params_value;
-        $data['products'] = unserialize($params);
-        
+        $params = Param::where('params', 'admin-abouts')->first();
+        if(isset($params)){
+          $params_value = $params->params_value;
+          $data['products'] = unserialize($params_value);
+        }
         // dd($data);
         return view('admin.abouts.index', $data);
     }
@@ -519,8 +521,11 @@ class DashboardController extends Controller
     public function setting()
     {
         $data['title_form'] = 'Setting';
-        $params = Param::where('params', 'admin-abouts')->first()->params_value;
-        $data['products'] = unserialize($params);
+        $params = Param::where('params', 'admin-setting')->first();
+        if(isset($params)){
+          $params_value = $params->params_value;
+          $data['products'] = unserialize($params_value);
+        }
         // dd($data);
         return view('admin.setting.index', $data);
     }
@@ -529,10 +534,9 @@ class DashboardController extends Controller
     {
         $data = $request->all();
         // dd($data);
-        $rules =  ['abouts_title'  => 'required' ,'abouts_description' => 'required'];
+        $rules =  ['setting_twitter'  => 'required' ,'setting_facebook' => 'required', 'setting_instagram'  => 'required' ,'setting_skype' => 'required', 'setting_linkedin' => 'required'];
         $atributname = [
-          'abouts_title.required' => 'Field is required.',
-          'abouts_description.required' => 'Field is required.'
+          'setting_twitter.required' => 'Field is required.'
         ];
 
         $validator = Validator::make($data, $rules, $atributname);
@@ -543,39 +547,47 @@ class DashboardController extends Controller
             ->withErrors( $validator );
         }
         else{
-          $cek = Param::where('params', 'admin-abouts')->first();
+          $cek = Param::where('params', 'admin-setting')->first();
           // dd($cek);
           if($cek){
             // echo "edit";
             $params_value = array(
-              'image'              => $request->abouts_image,
-              'title'              => $request->abouts_title,
-              'description'        => $request->abouts_description
+              'nama_lengkap'              => $request->setting_nama_lengkap,
+              'profesi'              => $request->setting_profesi,
+              'account_twitter'              => $request->setting_twitter,
+              'account_facebook'              => $request->setting_facebook,
+              'account_instagram'        => $request->setting_instagram,
+              'account_skype'              => $request->setting_skype,
+              'account_linkedin'              => $request->setting_linkedin
             );
 
             $data = array(
               'params_value'        => serialize($params_value)
             );
-            Param::where('params', 'admin-abouts')->update($data);
+            Param::where('params', 'admin-setting')->update($data);
 
-            Session::flash('success-message', "Success update Abouts" );
-            return redirect()->route('abouts-admin');
+            Session::flash('success-message', "Success Setting" );
+            return redirect()->route('setting-admin');
           }else{            
             
             $p        =  new Param; 
             $params_value = array(
-              'image'              => $request->abouts_image,
-              'title'              => $request->abouts_title,
-              'description'        => $request->abouts_description
+              'nama_lengkap'              => $request->setting_nama_lengkap,
+              'profesi'              => $request->setting_profesi,
+              'account_twitter'              => $request->setting_twitter,
+              'account_facebook'              => $request->setting_facebook,
+              'account_instagram'        => $request->setting_instagram,
+              'account_skype'              => $request->setting_skype,
+              'account_linkedin'              => $request->setting_linkedin
             );
-            $p->params                 = $request->abouts_params;
+            $p->params                 = $request->setting_params;
             $p->params_value           = serialize($params_value);
             // $p->title                  = $request->abouts_title;
             // $p->description            = $request->abouts_description;
             $p->save();
 
-            Session::flash('success-message', "Success update Abouts" );
-            return redirect()->route('abouts-admin');
+            Session::flash('success-message', "Success Setting");
+            return redirect()->route('setting-admin');
           }            
         }
 
