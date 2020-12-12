@@ -16,6 +16,7 @@
       <tr>
         <th>No</th>
         <th>Title</th>
+        <th>Categories</th>
         <th>Action</th>
       </tr>
       </thead>
@@ -24,6 +25,7 @@
         <tr>
           <td>{{ $loop->iteration }}</td>
           <td>{{ $p->title }}</td>
+          <td>{{ $p->nama_category }}</td>
           <td>
             <!-- <a href="{{ URL::to('admin/products/details/' . $p->id) }}"><i class="fa fa-eye-slash"></i> </a> -->
             <a href="{{ URL::to('admin/resume/' . $p->id) }}">

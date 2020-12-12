@@ -41,7 +41,11 @@ class FrontendController extends Controller
 
     public function resume()
     {
-        $data['resume'] = Resume::get();
+        $data['resume'] = Resume::leftjoin('tbl_category','tbl_category.id','tbl_resume.id_category')
+        ->select('tbl_category.nama_category as nama_category','tbl_resume.title','tbl_resume.start','tbl_resume.end','tbl_resume.address','tbl_resume.description')
+        ->get()
+        ->groupBy('nama_category')
+        ->toArray();
         // $arr = get_defined_vars();
         // dd($arr);
         return view('frontend.resume.index', $data);

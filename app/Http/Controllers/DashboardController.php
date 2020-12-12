@@ -242,7 +242,9 @@ class DashboardController extends Controller
 
     public function portofolio(Request $request)
     {
-        $data['products'] = Portofolio::orderby('created_at', 'DESC')->get();
+        $data['products'] = Portofolio::leftjoin('tbl_category','tbl_category.id','tbl_portofolio.id_category')
+        ->select('tbl_portofolio.title','tbl_category.nama_category')
+        ->orderby('tbl_portofolio.created_at', 'DESC')->get();
         $data['title_form'] = 'List Portofolio';
         // dd($data);
         return view('admin.portofolio.index', $data);
@@ -353,7 +355,9 @@ class DashboardController extends Controller
 
     public function resume()
     {
-        $data['products'] = Resume::orderby('created_at', 'DESC')->get();
+        $data['products'] = Resume::leftjoin('tbl_category','tbl_category.id','tbl_resume.id_category')
+        ->select('tbl_resume.title','tbl_category.nama_category')
+        ->orderby('tbl_resume.created_at', 'DESC')->get();
         $data['title_form'] = 'List Resume';
         // dd($data);
         return view('admin.resume.index', $data);

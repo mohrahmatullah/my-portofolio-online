@@ -31,7 +31,7 @@
                   <p class="text-red"><i class="icon fa fa-ban"></i> {{ $errors->first('abouts_image') }}</p>
                   @endif                      
                   <div class="show-image-portofolio text-center">
-                      <div class="img-div"><img src="{{ '/uploads/'.$products['image'] }}" class="user-image" alt="" style="width: 250px; height: 250px;" /></div><br>
+                      <div class="img-div"><img src="{{ '/public/uploads/'.$products['image'] }}" class="user-image" alt="" style="width: 250px; height: 250px;" /></div><br>
                       <div class="btn-div"><button type="button" class="btn btn-danger remove-image-portofolio">Remove image</button></div>
                   </div>
                 @else
